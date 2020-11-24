@@ -43,6 +43,9 @@ out/
 *.iml
 *.ipr
 *.iws
+logs/
+*.log
+lib/
 
 ##############################
 ## Eclipse
