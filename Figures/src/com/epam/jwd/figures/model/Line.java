@@ -2,7 +2,7 @@ package com.epam.jwd.figures.model;
 
 import java.util.Objects;
 
-public class Line extends Figure {
+public class Line {
 
     private final Point firstPoint;
     private final Point secondPoint;

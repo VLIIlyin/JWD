@@ -1,4 +1,4 @@
-package com.epam.jwd.figures.factory;
+package com.epam.jwd.figures.model.factory;
 
 import com.epam.jwd.figures.model.Line;
 import com.epam.jwd.figures.model.Point;
@@ -61,4 +61,5 @@ public class LineFactory {
                     line.getSecondPoint()));
         }
     }
+
 }
