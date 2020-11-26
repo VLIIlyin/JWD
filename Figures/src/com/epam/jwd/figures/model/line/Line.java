@@ -1,8 +1,10 @@
-package com.epam.jwd.figures.model;
+package com.epam.jwd.figures.model.line;
+
+import com.epam.jwd.figures.model.point.Point;
 
 import java.util.Objects;
 
-public class Line {
+class Line {
 
     private final Point firstPoint;
     private final Point secondPoint;

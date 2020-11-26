@@ -1,12 +1,15 @@
-package com.epam.jwd.figures.model;
+package com.epam.jwd.figures.model.square;
 
+import com.epam.jwd.figures.model.Figure;
+import com.epam.jwd.figures.model.point.Point;
 import com.epam.jwd.figures.service.PointService;
 import com.epam.jwd.figures.strategy.SquareStrategy;
-import com.epam.jwd.figures.strategy.TriangleStrategy;
 
 import java.util.Objects;
 
-public class Square extends Figure {
+class Square extends Figure {
+
+    private static Square instance;
 
     private final Point firstPoint;
     private final Point secondPoint;
@@ -20,6 +23,14 @@ public class Square extends Figure {
         this.fourthPoint = fourthPoint;
 
         Figure.setFigureStrategyInterface(SquareStrategy.getInstance());
+    }
+
+    public static Square getInstance(Point firstPoint, Point secondPoint, Point thirdPoint, Point fourthPoint){
+        if (instance == null){
+            instance = new Square(firstPoint, secondPoint, thirdPoint, fourthPoint);
+        }
+
+        return instance;
     }
 
     public boolean isFigureCanExist() {
@@ -43,11 +54,11 @@ public class Square extends Figure {
                 PointService.intervalBetweenPoints(getFourthPoint(), getFirstPoint())};
     }
 
-    private Double[] sides() {
-        return sides(intervals());
+    private Double[] sidesSum() {
+        return sidesSum(intervals());
     }
 
-    private Double[] sides(Double[] intervals) {
+    private Double[] sidesSum(Double[] intervals) {
         return new Double[]{intervals[0] + intervals[1],
                 intervals[1] + intervals[2],
                 intervals[2] + intervals[3],
@@ -57,7 +68,7 @@ public class Square extends Figure {
     public boolean isSumOfSideCorrect() {
 
         Double[] intervals = intervals();
-        Double[] sides = sides(intervals);
+        Double[] sides = sidesSum(intervals);
 
         return sides[0].equals(sides[1])
                 && sides[1].equals(sides[2])

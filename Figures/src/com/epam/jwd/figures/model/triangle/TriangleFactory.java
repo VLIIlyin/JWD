@@ -1,8 +1,8 @@
-package com.epam.jwd.figures.factory;
+package com.epam.jwd.figures.model.triangle;
 
 import com.epam.jwd.figures.model.Figure;
-import com.epam.jwd.figures.model.Point;
-import com.epam.jwd.figures.model.Triangle;
+import com.epam.jwd.figures.model.point.Point;
+import com.epam.jwd.figures.model.point.PointFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,7 +10,7 @@ import java.util.Locale;
 
 public class TriangleFactory {
 
-    final static Logger Logger = LogManager.getLogger(TriangleFactory.class);
+    static final Logger LOGGER = LogManager.getLogger(TriangleFactory.class);
     static boolean objectTriangleCreated;
 
     public static void createAndPrintTriangle() {
@@ -19,7 +19,7 @@ public class TriangleFactory {
         if (objectTriangleCreated) {
             printInfoAboutTriangles(triangles);
         } else {
-            Logger.error("Triangle object was no created");
+            LOGGER.error("Triangle object was no created");
         }
     }
 
@@ -36,11 +36,11 @@ public class TriangleFactory {
             System.arraycopy(points, 0, pointsForTriangle, 0, counter);
 
             objectTriangleCreated = true;
-            Logger.info("Triangle object created from first three points of array");
+            LOGGER.info("Triangle object created from first three points of array");
 
             return new Triangle(pointsForTriangle[0], pointsForTriangle[1], pointsForTriangle[2]);
         } else {
-            Logger.error("Triangle object cannot be created because number of points less than 3");
+            LOGGER.error("Triangle object cannot be created because number of points less than 3");
 
             return null;
         }
@@ -55,23 +55,23 @@ public class TriangleFactory {
     private static void printInfoAboutTriangle(Triangle triangle) {
         if (triangle.isPointsAreDifferent()) {
             if (triangle.isSumOfSideCorrect()) {
-                Logger.info(triangle);
+                LOGGER.info(triangle);
                 printCalculatedPerimeter(triangle);
                 printCalculatedArea(triangle);
             } else {
-                Logger.error(String.format(Locale.US, "Triangle with next points: %s %s %s cannot exist",
+                LOGGER.error(String.format(Locale.US, "Triangle with next points: %s %s %s cannot exist",
                         triangle.getFirstPoint(),
                         triangle.getSecondPoint(),
                         triangle.getThirdPoint()));
             }
         } else {
-            Logger.error(String.format(Locale.US, "Object %s is not triangle", triangle));
+            LOGGER.error(String.format(Locale.US, "Object %s is not triangle", triangle));
         }
     }
 
     private static void printCalculatedPerimeter(Triangle triangle) {
-        Logger.info("Perimeter calculated with help of triangle strategy");
-        Logger.info(String.format("Perimeter = %s ",
+        LOGGER.info("Perimeter calculated with help of triangle strategy");
+        LOGGER.info(String.format("Perimeter = %s ",
                 Figure.getFigureStrategyInterface(triangle).calculatePerimeter(new Point[]{
                         triangle.getFirstPoint(),
                         triangle.getSecondPoint(),
@@ -79,7 +79,7 @@ public class TriangleFactory {
     }
 
     private static void printCalculatedArea(Triangle triangle) {
-        Logger.info(String.format("Area = %s",
+        LOGGER.info(String.format("Area = %s",
                 Figure.getFigureStrategyInterface(triangle).calculateArea(new Point[]{
                         triangle.getFirstPoint(),
                         triangle.getSecondPoint(),

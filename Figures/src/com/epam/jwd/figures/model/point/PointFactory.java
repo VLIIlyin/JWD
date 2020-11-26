@@ -1,6 +1,5 @@
-package com.epam.jwd.figures.factory;
+package com.epam.jwd.figures.model.point;
 
-import com.epam.jwd.figures.model.Point;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -8,7 +7,7 @@ import java.util.Random;
 
 public class PointFactory {
 
-    final static Logger Logger = LogManager.getLogger(PointFactory.class);
+    static final Logger LOGGER = LogManager.getLogger(PointFactory.class);
 
     public static void createAndPrintPointArray(){
         printInfoAboutPoint(generateRandomArray());
@@ -20,7 +19,19 @@ public class PointFactory {
                 new Point(generateRandomCoord(), generateRandomCoord()),
                 new Point(generateRandomCoord(), generateRandomCoord())};
 
-        Logger.info("Array of points created");
+        LOGGER.info("Array of points created");
+
+        return points;
+    }
+
+    public static Point[] generateRandomArrayForFigure(int countOfPoints){
+        Point[] points = new Point[countOfPoints];
+        int counter = 0;
+
+        while (counter < points.length){
+            points[counter] = new Point(generateRandomCoord(), generateRandomCoord());
+            counter++;
+        }
 
         return points;
     }
@@ -34,7 +45,7 @@ public class PointFactory {
         int numerator = 0;
 
         do{
-            Logger.info(points[numerator]);
+            LOGGER.info(points[numerator]);
             numerator++;
         }
         while(numerator < points.length);

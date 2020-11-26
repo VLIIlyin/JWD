@@ -1,6 +1,6 @@
 package com.epam.jwd.figures.service;
 
-import com.epam.jwd.figures.model.Point;
+import com.epam.jwd.figures.model.point.Point;
 
 public class PointService {
     private static double intervalCoordX(Point pointFirst, Point pointSecond){

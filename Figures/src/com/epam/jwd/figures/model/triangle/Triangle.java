@@ -1,9 +1,11 @@
-package com.epam.jwd.figures.model;
+package com.epam.jwd.figures.model.triangle;
 
+import com.epam.jwd.figures.model.Figure;
+import com.epam.jwd.figures.model.point.Point;
 import com.epam.jwd.figures.service.PointService;
 import com.epam.jwd.figures.strategy.TriangleStrategy;
 
-public class Triangle extends Figure {
+class Triangle extends Figure {
 
     private final Point firstPoint;
     private final Point secondPoint;
@@ -34,24 +36,23 @@ public class Triangle extends Figure {
                 PointService.intervalBetweenPoints(getThirdPoint(), getFirstPoint())};
     }
 
-    private Double[] sides() {
-        return sides(intervals());
+    private Double[] sidesSum() {
+        return sidesSum(intervals());
     }
 
-    private Double[] sides(Double[] intervals) {
+    private Double[] sidesSum(Double[] intervals) {
         return new Double[]{intervals[0] + intervals[1],
                 intervals[0] + intervals[2],
                 intervals[1] + intervals[2]};
     }
 
     public boolean isSumOfSideCorrect() {
-
         Double[] intervals = intervals();
-        Double[] sides = sides(intervals);
+        Double[] sidesSum = sidesSum(intervals);
 
-        return sides[0] > intervals[2]
-                && sides[1] > intervals[1]
-                && sides[2] > intervals[0];
+        return sidesSum[0] > intervals[2]
+                && sidesSum[1] > intervals[1]
+                && sidesSum[2] > intervals[0];
     }
 
     public Point getFirstPoint() {

@@ -1,6 +1,6 @@
 package com.epam.jwd.figures.strategy;
 
-import com.epam.jwd.figures.model.Point;
+import com.epam.jwd.figures.model.point.Point;
 import com.epam.jwd.figures.service.PointService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 public enum TriangleStrategy implements FigureStrategyInterface {
     TRIANGLE;
 
-    final static Logger Logger = LogManager.getLogger(TriangleStrategy.class);
+    static final Logger LOGGER = LogManager.getLogger(TriangleStrategy.class);
 
     @Override
     public double calculatePerimeter(Point[] points) {
@@ -19,7 +19,7 @@ public enum TriangleStrategy implements FigureStrategyInterface {
 
     @Override
     public double calculateArea(Point[] points) {
-        Logger.info("Area calculated with help of triangle strategy");
+        LOGGER.info("Area calculated with help of triangle strategy");
         double compositionOfHalfPerimeterWithSides = calculateCompositionOfHalfPerimeterWithSides(points);
         return Math.sqrt(compositionOfHalfPerimeterWithSides < 0
                 ? compositionOfHalfPerimeterWithSides * -1

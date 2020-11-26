@@ -1,27 +1,27 @@
-package com.epam.jwd.figures.factory;
+package com.epam.jwd.figures.model.line;
 
-import com.epam.jwd.figures.model.Line;
-import com.epam.jwd.figures.model.Point;
+import com.epam.jwd.figures.model.point.Point;
+import com.epam.jwd.figures.model.point.PointFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class LineFactory {
 
-    final static Logger Logger = LogManager.getLogger(LineFactory.class);
+    static final Logger LOGGER = LogManager.getLogger(LineFactory.class);
     static boolean objectLineCreated;
 
     public static void createAndPrintLineArray(){
-        Line[] lines = creteLineArrayFromPoints();
+        Line[] lines = createLineArrayFromPoints();
 
         if (objectLineCreated) {
             printInfoAboutLines(lines);
         }
         else{
-            Logger.error("Line object was no created");
+            LOGGER.error("Line object was no created");
         }
     }
 
-    private static Line[] creteLineArrayFromPoints(){
+    private static Line[] createLineArrayFromPoints(){
         return new Line[]{createLineFromTwoFirstPoints(PointFactory.generateRandomArray()),
                 createLineFromTwoFirstPoints(PointFactory.generateRandomArray())};
     }
@@ -34,12 +34,12 @@ public class LineFactory {
             System.arraycopy(points, 0, pointForLine, 0, counter);
 
             objectLineCreated = true;
-            Logger.info("Line created from first two points of array");
+            LOGGER.info("Line created from first two points of array");
 
             return new Line(pointForLine[0], pointForLine[1]);
         }
         else {
-            Logger.error("Line object cannot be created because number of points less than 2");
+            LOGGER.error("Line object cannot be created because number of points less than 2");
 
             return null;
         }
@@ -53,10 +53,10 @@ public class LineFactory {
 
     private static void printInfoAboutLine(Line line){
         if (line.isFigureCanExist()) {
-            Logger.info(line);
+            LOGGER.info(line);
         }
         else {
-            Logger.error(String.format("Line with next points: %s %s cannot exist",
+            LOGGER.error(String.format("Line with next points: %s %s cannot exist",
                     line.getFirstPoint(),
                     line.getSecondPoint()));
         }

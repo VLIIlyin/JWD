@@ -1,8 +1,8 @@
-package com.epam.jwd.figures.factory;
+package com.epam.jwd.figures.model.square;
 
 import com.epam.jwd.figures.model.Figure;
-import com.epam.jwd.figures.model.Point;
-import com.epam.jwd.figures.model.Square;
+import com.epam.jwd.figures.model.point.Point;
+import com.epam.jwd.figures.model.point.PointFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,7 +10,7 @@ import java.util.Locale;
 
 public class SquareFactory {
 
-    final static Logger Logger = LogManager.getLogger(SquareFactory.class);
+    static final Logger LOGGER = LogManager.getLogger(SquareFactory.class);
     static boolean objectSquareCreated;
 
     public static void createAndPrintSquare() {
@@ -19,23 +19,24 @@ public class SquareFactory {
         if (objectSquareCreated) {
             printInfoAboutSquares(squares);
         } else {
-            Logger.error("Square object was no created");
+            LOGGER.error("Square object was no created");
         }
     }
 
     private static Square[] createSquareArrayFromPoints() {
-        return new Square[]{createSquareFromFourFirstPoints(PointFactory.generateRandomArray())};
+        return new Square[]{createSquareFromFourFirstPoints(PointFactory.generateRandomArray()),
+                createSquareFromFourFirstPoints(PointFactory.generateRandomArray())};
     }
 
     private static Square createSquareFromFourFirstPoints(Point[] points) {
         if (points.length >= 4) {
 
             objectSquareCreated = true;
-            Logger.info("Square object created from four points of array");
+            LOGGER.info("Square object created from four points of array");
 
-            return new Square(points[0], points[1], points[2], points[3]);
+            return Square.getInstance(points[0], points[1], points[2], points[3]);
         } else {
-            Logger.error("Square object cannot be created because number of points less than 4");
+            LOGGER.error("Square object cannot be created because number of points less than 4");
 
             return null;
         }
@@ -50,23 +51,23 @@ public class SquareFactory {
     private static void printInfoAboutSquare(Square square) {
         if (square.isPointsAreDifferent()) {
             if (square.isSumOfSideCorrect()) {
-                Logger.info(square);
+                LOGGER.info(square);
                 printCalculatedPerimeter(square);
                 printCalculatedArea(square);
             } else {
-                Logger.error(String.format(Locale.US, "Square with next points: %s %s %s %s cannot exist",
+                LOGGER.error(String.format(Locale.US, "Square with next points: %s %s %s %s cannot exist",
                         square.getFirstPoint(),
                         square.getSecondPoint(),
                         square.getThirdPoint(),
                         square.getFourthPoint()));
             }
         } else {
-            Logger.error(String.format(Locale.US, "Object %s is not square", square));
+            LOGGER.error(String.format(Locale.US, "Object %s is not square", square));
         }
     }
 
     private static void printCalculatedPerimeter(Square square) {
-        Logger.info(String.format("Perimeter = %s ",
+        LOGGER.info(String.format("Perimeter = %s ",
                 Figure.getFigureStrategyInterface(square).calculatePerimeter(new Point[]{
                         square.getFirstPoint(),
                         square.getSecondPoint(),
@@ -75,7 +76,7 @@ public class SquareFactory {
     }
 
     private static void printCalculatedArea(Square square) {
-        Logger.info(String.format("Area = %s",
+        LOGGER.info(String.format("Area = %s",
                 Figure.getFigureStrategyInterface(square).calculateArea(new Point[]{
                         square.getFirstPoint(),
                         square.getSecondPoint(),

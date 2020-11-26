@@ -1,9 +1,9 @@
 package com.epam.jwd.figures.strategy;
 
-import com.epam.jwd.figures.model.Point;
+import com.epam.jwd.figures.model.point.Point;
 
 public interface FigureStrategyInterface {
 
-    public double calculatePerimeter(Point[] points);
-    public double calculateArea(Point[] points);
+    double calculatePerimeter(Point[] points);
+    double calculateArea(Point[] points);
 }
