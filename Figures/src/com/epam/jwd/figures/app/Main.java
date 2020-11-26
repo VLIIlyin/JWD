@@ -16,11 +16,11 @@ public class Main {
 
         Logger.info("Application started");
 
-        /*PointFactory.createAndPrintPointArray();
+        PointFactory.createAndPrintPointArray();
         LineFactory.createAndPrintLineArray();
-        TriangleFactory.createAndPrintTriangle();*/
+        TriangleFactory.createAndPrintTriangle();
         SquareFactory.createAndPrintSquare();
-        //MultiAngleFactory.createAndPrintFigure();
+        MultiAngleFactory.createAndPrintFigure();
 
         Logger.info("Application ended");
     }
