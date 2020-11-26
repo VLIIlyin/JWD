@@ -1,10 +1,13 @@
 package com.epam.jwd.figures.model;
 
 import com.epam.jwd.figures.service.PointService;
+import com.epam.jwd.figures.strategy.SquareStrategy;
+import com.epam.jwd.figures.strategy.TriangleStrategy;
 
 import java.util.Objects;
 
 public class Square extends Figure {
+
     private final Point firstPoint;
     private final Point secondPoint;
     private final Point thirdPoint;
@@ -15,6 +18,8 @@ public class Square extends Figure {
         this.secondPoint = secondPoint;
         this.thirdPoint = thirdPoint;
         this.fourthPoint = fourthPoint;
+
+        Figure.setFigureStrategyInterface(SquareStrategy.getInstance());
     }
 
     public boolean isFigureCanExist() {

@@ -1,8 +1,9 @@
 package com.epam.jwd.figures.model;
 
 import com.epam.jwd.figures.service.PointService;
+import com.epam.jwd.figures.strategy.TriangleStrategy;
 
-public class Triangle {
+public class Triangle extends Figure {
 
     private final Point firstPoint;
     private final Point secondPoint;
@@ -12,6 +13,8 @@ public class Triangle {
         this.firstPoint = firstPoint;
         this.secondPoint = secondPoint;
         this.thirdPoint = thirdPoint;
+
+        Figure.setFigureStrategyInterface(TriangleStrategy.TRIANGLE);
     }
 
     public boolean isFigureCanExist() {

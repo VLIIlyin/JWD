@@ -27,7 +27,7 @@ public class PointFactory {
 
     private static double generateRandomCoord(){
         Random random = new Random();
-        return random.nextDouble();
+        return 1 + random.nextDouble() * 30;
     }
 
     private static void printInfoAboutPoint(Point[] points){

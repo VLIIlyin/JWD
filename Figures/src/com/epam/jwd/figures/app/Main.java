@@ -18,7 +18,7 @@ public class Main {
         PointFactory.createAndPrintPointArray();
         LineFactory.createAndPrintLineArray();
         TriangleFactory.createAndPrintTriangle();
-        SquareFactory.createAndPrintTriangle();
+        SquareFactory.createAndPrintSquare();
 
         Logger.info("Application ended");
     }

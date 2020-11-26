@@ -1,4 +1,4 @@
-package com.epam.jwd.figures.model.factory;
+package com.epam.jwd.figures.factory;
 
 import com.epam.jwd.figures.model.Line;
 import com.epam.jwd.figures.model.Point;
@@ -56,7 +56,7 @@ public class LineFactory {
             Logger.info(line);
         }
         else {
-            Logger.error(String.format("Line with next points: %f %f cannot exist",
+            Logger.error(String.format("Line with next points: %s %s cannot exist",
                     line.getFirstPoint(),
                     line.getSecondPoint()));
         }

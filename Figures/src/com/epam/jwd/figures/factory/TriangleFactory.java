@@ -1,5 +1,6 @@
 package com.epam.jwd.figures.factory;
 
+import com.epam.jwd.figures.model.Figure;
 import com.epam.jwd.figures.model.Point;
 import com.epam.jwd.figures.model.Triangle;
 import org.apache.logging.log4j.LogManager;
@@ -55,6 +56,8 @@ public class TriangleFactory {
         if (triangle.isPointsAreDifferent()) {
             if (triangle.isSumOfSideCorrect()) {
                 Logger.info(triangle);
+                printCalculatedPerimeter(triangle);
+                printCalculatedArea(triangle);
             } else {
                 Logger.error(String.format(Locale.US, "Triangle with next points: %s %s %s cannot exist",
                         triangle.getFirstPoint(),
@@ -64,5 +67,22 @@ public class TriangleFactory {
         } else {
             Logger.error(String.format(Locale.US, "Object %s is not triangle", triangle));
         }
+    }
+
+    private static void printCalculatedPerimeter(Triangle triangle) {
+        Logger.info("Perimeter calculated with help of triangle strategy");
+        Logger.info(String.format("Perimeter = %s ",
+                Figure.getFigureStrategyInterface(triangle).calculatePerimeter(new Point[]{
+                        triangle.getFirstPoint(),
+                        triangle.getSecondPoint(),
+                        triangle.getThirdPoint()})));
+    }
+
+    private static void printCalculatedArea(Triangle triangle) {
+        Logger.info(String.format("Area = %s",
+                Figure.getFigureStrategyInterface(triangle).calculateArea(new Point[]{
+                        triangle.getFirstPoint(),
+                        triangle.getSecondPoint(),
+                        triangle.getThirdPoint()})));
     }
 }

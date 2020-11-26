@@ -1,5 +1,6 @@
 package com.epam.jwd.figures.factory;
 
+import com.epam.jwd.figures.model.Figure;
 import com.epam.jwd.figures.model.Point;
 import com.epam.jwd.figures.model.Square;
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +13,7 @@ public class SquareFactory {
     final static Logger Logger = LogManager.getLogger(SquareFactory.class);
     static boolean objectSquareCreated;
 
-    public static void createAndPrintTriangle() {
+    public static void createAndPrintSquare() {
         Square[] squares = createSquareArrayFromPoints();
 
         if (objectSquareCreated) {
@@ -50,6 +51,8 @@ public class SquareFactory {
         if (square.isPointsAreDifferent()) {
             if (square.isSumOfSideCorrect()) {
                 Logger.info(square);
+                printCalculatedPerimeter(square);
+                printCalculatedArea(square);
             } else {
                 Logger.error(String.format(Locale.US, "Square with next points: %s %s %s %s cannot exist",
                         square.getFirstPoint(),
@@ -60,5 +63,23 @@ public class SquareFactory {
         } else {
             Logger.error(String.format(Locale.US, "Object %s is not square", square));
         }
+    }
+
+    private static void printCalculatedPerimeter(Square square) {
+        Logger.info(String.format("Perimeter = %s ",
+                Figure.getFigureStrategyInterface(square).calculatePerimeter(new Point[]{
+                        square.getFirstPoint(),
+                        square.getSecondPoint(),
+                        square.getThirdPoint(),
+                        square.getFourthPoint()})));
+    }
+
+    private static void printCalculatedArea(Square square) {
+        Logger.info(String.format("Area = %s",
+                Figure.getFigureStrategyInterface(square).calculateArea(new Point[]{
+                        square.getFirstPoint(),
+                        square.getSecondPoint(),
+                        square.getThirdPoint(),
+                        square.getFourthPoint()})));
     }
 }
