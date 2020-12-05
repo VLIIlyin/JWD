@@ -10,6 +10,13 @@ Updated class "Square" which now is Singleton class (in "SquareFactory" class in
 randomly -> as result in log file logs will be the same).
 Updated packaging structure. Now it implemented with such way so figure objects will be created only from factory classes.
 
+Updated implementation:
+now there is possibility set array length for figures from Main.
+Added new exception classes.
+Added pre and post processor classes. 
+PreProcessor works with points before creation of object and check if points are equals.
+PostProcessor works with figures. Return true if figure is valid.
+
 Libraries used in this project:
 log4j-api-2.14.0.jar
 log4j-core-2.14.0.jar

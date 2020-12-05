@@ -1,7 +1,9 @@
 package com.epam.jwd.figures.model.line;
 
+import com.epam.jwd.exception.FigureNotExistException;
 import com.epam.jwd.figures.model.point.Point;
 import com.epam.jwd.figures.model.point.PointFactory;
+import com.epam.jwd.service.impl.FigurePointCheckPreProcessor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,23 +12,29 @@ public class LineFactory {
     static final Logger LOGGER = LogManager.getLogger(LineFactory.class);
     static boolean objectLineCreated;
 
-    public static void createAndPrintLineArray(){
-        Line[] lines = createLineArrayFromPoints();
+    public static void createAndPrintLineArray(int arrayLength) throws FigureNotExistException {
+        Line[] lines = createLineArrayFromPoints(arrayLength);
 
         if (objectLineCreated) {
             printInfoAboutLines(lines);
         }
         else{
-            LOGGER.error("Line object was no created");
+            LOGGER.error("Line object was not created");
         }
     }
 
-    private static Line[] createLineArrayFromPoints(){
-        return new Line[]{createLineFromTwoFirstPoints(PointFactory.generateRandomArray()),
-                createLineFromTwoFirstPoints(PointFactory.generateRandomArray())};
+    private static Line[] createLineArrayFromPoints(int arrayLength){
+        Line[] line = new Line[arrayLength];
+        for (int i = 0; i < arrayLength; i++){
+            Point[] points = PointFactory.generateRandomArray();
+            if (FigurePointCheckPreProcessor.process(points)) {
+                line[i] = createLineFromTwoFirstPoints(points);
+            }
+        }
+        return line;
     }
 
-    private static Line createLineFromTwoFirstPoints(Point[] points){
+    public static Line createLineFromTwoFirstPoints(Point[] points){
         if (points.length >= 2) {
             Point[] pointForLine = new Point[2];
             int counter = 2;

@@ -3,6 +3,19 @@ package com.epam.jwd.figures.service;
 import com.epam.jwd.figures.model.point.Point;
 
 public class PointService {
+
+    public static boolean isPointsAreDifferent(Point[] points) {
+        for (int i = 0; i < points.length; i++) {
+            for (int k = i + 1; k < points.length; k++) {
+                if (points[i].equals(points[k])) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     private static double intervalCoordX(Point pointFirst, Point pointSecond){
         return pointFirst.getCoordX() - pointSecond.getCoordX();
     }

@@ -1,8 +1,11 @@
 package com.epam.jwd.figures.model.triangle;
 
+import com.epam.jwd.exception.FigureNotExistException;
 import com.epam.jwd.figures.model.Figure;
 import com.epam.jwd.figures.model.point.Point;
 import com.epam.jwd.figures.model.point.PointFactory;
+import com.epam.jwd.service.impl.FigureExistencePostProcessor;
+import com.epam.jwd.service.impl.FigurePointCheckPreProcessor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,8 +16,8 @@ public class TriangleFactory {
     static final Logger LOGGER = LogManager.getLogger(TriangleFactory.class);
     static boolean objectTriangleCreated;
 
-    public static void createAndPrintTriangle() {
-        Triangle[] triangles = createTriangleArrayFromPoints();
+    public static void createAndPrintTriangle(int arrayLength) throws FigureNotExistException {
+        Triangle[] triangles = createTriangleArrayFromPoints(arrayLength);
 
         if (objectTriangleCreated) {
             printInfoAboutTriangles(triangles);
@@ -23,22 +26,29 @@ public class TriangleFactory {
         }
     }
 
-    private static Triangle[] createTriangleArrayFromPoints() {
-        return new Triangle[]{createTriangleFromThreeFirstPoints(PointFactory.generateRandomArray()),
-                createTriangleFromThreeFirstPoints(PointFactory.generateRandomArray())};
+    private static Triangle[] createTriangleArrayFromPoints(int arrayLength) {
+        Triangle[] triangles = new Triangle[arrayLength];
+        for (int i = 0; i < arrayLength; i++) {
+            triangles[i] = createTriangleFromThreeFirstPoints(PointFactory.generateRandomArray());
+        }
+
+        return triangles;
     }
 
     private static Triangle createTriangleFromThreeFirstPoints(Point[] points) {
         if (points.length >= 3) {
             Point[] pointsForTriangle = new Point[3];
             int counter = 3;
-
             System.arraycopy(points, 0, pointsForTriangle, 0, counter);
-
-            objectTriangleCreated = true;
-            LOGGER.info("Triangle object created from first three points of array");
-
-            return new Triangle(pointsForTriangle[0], pointsForTriangle[1], pointsForTriangle[2]);
+            if (FigurePointCheckPreProcessor.process(points)) {
+                objectTriangleCreated = true;
+                LOGGER.info("Triangle object created from first three points of array");
+                return new Triangle(pointsForTriangle[0], pointsForTriangle[1], pointsForTriangle[2]);
+            }
+            else{
+                LOGGER.error("Triangle object cannot be created because some of points are the same");
+                return null;
+            }
         } else {
             LOGGER.error("Triangle object cannot be created because number of points less than 3");
 
@@ -53,19 +63,15 @@ public class TriangleFactory {
     }
 
     private static void printInfoAboutTriangle(Triangle triangle) {
-        if (triangle.isPointsAreDifferent()) {
-            if (triangle.isSumOfSideCorrect()) {
-                LOGGER.info(triangle);
-                printCalculatedPerimeter(triangle);
-                printCalculatedArea(triangle);
-            } else {
-                LOGGER.error(String.format(Locale.US, "Triangle with next points: %s %s %s cannot exist",
-                        triangle.getFirstPoint(),
-                        triangle.getSecondPoint(),
-                        triangle.getThirdPoint()));
-            }
+        if (FigureExistencePostProcessor.process(triangle)) {
+            LOGGER.info(triangle);
+            printCalculatedPerimeter(triangle);
+            printCalculatedArea(triangle);
         } else {
-            LOGGER.error(String.format(Locale.US, "Object %s is not triangle", triangle));
+            LOGGER.error(String.format(Locale.US, "Triangle with next points: %s %s %s cannot exist",
+                    triangle.getFirstPoint(),
+                    triangle.getSecondPoint(),
+                    triangle.getThirdPoint()));
         }
     }
 
