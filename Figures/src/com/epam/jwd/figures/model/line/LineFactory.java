@@ -1,6 +1,6 @@
 package com.epam.jwd.figures.model.line;
 
-import com.epam.jwd.exception.FigureNotExistException;
+import com.epam.jwd.exception.FigurePointsException;
 import com.epam.jwd.figures.model.point.Point;
 import com.epam.jwd.figures.model.point.PointFactory;
 import com.epam.jwd.service.impl.FigurePointCheckPreProcessor;
@@ -12,7 +12,7 @@ public class LineFactory {
     static final Logger LOGGER = LogManager.getLogger(LineFactory.class);
     static boolean objectLineCreated;
 
-    public static void createAndPrintLineArray(int arrayLength) throws FigureNotExistException {
+    public static void createAndPrintLineArray(int arrayLength){
         Line[] lines = createLineArrayFromPoints(arrayLength);
 
         if (objectLineCreated) {
@@ -27,8 +27,12 @@ public class LineFactory {
         Line[] line = new Line[arrayLength];
         for (int i = 0; i < arrayLength; i++){
             Point[] points = PointFactory.generateRandomArray();
-            if (FigurePointCheckPreProcessor.process(points)) {
-                line[i] = createLineFromTwoFirstPoints(points);
+            try {
+                if (FigurePointCheckPreProcessor.process(points)) {
+                    line[i] = createLineFromTwoFirstPoints(points);
+                }
+            } catch (FigurePointsException e) {
+                LOGGER.error(e.getMessage());
             }
         }
         return line;

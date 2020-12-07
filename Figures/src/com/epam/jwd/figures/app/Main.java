@@ -21,13 +21,9 @@ public class Main {
 
         PointFactory.createAndPrintPointArray();
 
-        try {
-            LineFactory.createAndPrintLineArray(2);
-            TriangleFactory.createAndPrintTriangle(3);
-            SquareFactory.createAndPrintSquare();
-        } catch (FigureNotExistException e) {
-            e.logException(e.getMessage());
-        }
+        LineFactory.createAndPrintLineArray(2);
+        TriangleFactory.createAndPrintTriangle(3);
+        SquareFactory.createAndPrintSquare();
 
         createMultiAngles();
 

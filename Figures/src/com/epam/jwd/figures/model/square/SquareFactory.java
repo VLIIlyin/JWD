@@ -1,6 +1,7 @@
 package com.epam.jwd.figures.model.square;
 
 import com.epam.jwd.exception.FigureNotExistException;
+import com.epam.jwd.exception.FigurePointsException;
 import com.epam.jwd.figures.model.Figure;
 import com.epam.jwd.figures.model.point.Point;
 import com.epam.jwd.figures.model.point.PointFactory;
@@ -16,7 +17,7 @@ public class SquareFactory {
     static final Logger LOGGER = LogManager.getLogger(SquareFactory.class);
     static boolean objectSquareCreated;
 
-    public static void createAndPrintSquare() throws FigureNotExistException {
+    public static void createAndPrintSquare(){
         Square[] squares = createSquareArrayFromPoints();
 
         if (objectSquareCreated) {
@@ -33,19 +34,23 @@ public class SquareFactory {
 
     private static Square createSquareFromFourFirstPoints(Point[] points) {
         if (points.length >= 4) {
-            if (FigurePointCheckPreProcessor.process(points)) {
-                objectSquareCreated = true;
-                LOGGER.info("Square object created from four points of array");
-                return Square.getInstance(points[0], points[1], points[2], points[3]);
-            } else {
-                LOGGER.error("Square object cannot be created because some of points are the same");
-                return null;
+            try {
+                if (FigurePointCheckPreProcessor.process(points)) {
+                    objectSquareCreated = true;
+                    LOGGER.info("Square object created from four points of array");
+                    return Square.getInstance(points[0], points[1], points[2], points[3]);
+                } else {
+                    LOGGER.error("Square object cannot be created because some of points are the same");
+                    return null;
+                }
+            } catch (FigurePointsException e) {
+                LOGGER.error(e.getMessage());
             }
         } else {
             LOGGER.error("Square object cannot be created because number of points less than 4");
-
             return null;
         }
+        return null;
     }
 
     private static void printInfoAboutSquares(Square[] squares) {
@@ -55,16 +60,20 @@ public class SquareFactory {
     }
 
     private static void printInfoAboutSquare(Square square) {
-        if (FigureExistencePostProcessor.process(square)) {
-            LOGGER.info(square);
-            printCalculatedPerimeter(square);
-            printCalculatedArea(square);
-        } else {
-            LOGGER.error(String.format(Locale.US, "Square with next points: %s %s %s %s cannot exist",
-                    square.getFirstPoint(),
-                    square.getSecondPoint(),
-                    square.getThirdPoint(),
-                    square.getFourthPoint()));
+        try {
+            if (FigureExistencePostProcessor.process(square)) {
+                LOGGER.info(square);
+                printCalculatedPerimeter(square);
+                printCalculatedArea(square);
+            } else {
+                LOGGER.error(String.format(Locale.US, "Square with next points: %s %s %s %s cannot exist",
+                        square.getFirstPoint(),
+                        square.getSecondPoint(),
+                        square.getThirdPoint(),
+                        square.getFourthPoint()));
+            }
+        } catch (FigureNotExistException e) {
+            LOGGER.error(e.getMessage());
         }
     }
 

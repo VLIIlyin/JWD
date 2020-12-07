@@ -8,8 +8,8 @@ public class FigureNotExistException extends FigureException {
 
     static final Logger LOGGER = LogManager.getLogger(FigureNotExistException.class);
 
-    public FigureNotExistException(String message, Point point) {
-        super(message, point);
+    public FigureNotExistException(String message) {
+        super(message);
     }
 
     public void logException(String message) {
