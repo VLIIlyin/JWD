@@ -10,8 +10,4 @@ public class FigurePointsException extends FigureException {
     public FigurePointsException(String message) {
         super(message);
     }
-
-    public void logException(String message) {
-        LOGGER.error(message);
-    }
 }

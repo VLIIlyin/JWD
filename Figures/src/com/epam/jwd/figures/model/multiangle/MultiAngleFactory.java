@@ -1,6 +1,7 @@
 package com.epam.jwd.figures.model.multiangle;
 
 import com.epam.jwd.exception.FigureNotExistException;
+import com.epam.jwd.exception.FigurePointsException;
 import com.epam.jwd.figures.model.point.Point;
 import com.epam.jwd.figures.model.point.PointFactory;
 import com.epam.jwd.service.impl.FigureExistencePostProcessor;
@@ -24,9 +25,13 @@ public class MultiAngleFactory {
 
         for (int i = 0; i < countOfFigures; i++) {
             Point[] pointsForMultiAngleFigure = PointFactory.generateRandomArrayForFigure(countOfPoints);
-            if (FigurePointCheckPreProcessor.process(pointsForMultiAngleFigure)) {
-                multiAngleFigures[i] = new MultiAngleFigure(countOfPoints, pointsForMultiAngleFigure);
-                LOGGER.info(String.format("Figure object created with number of points = %d", countOfPoints));
+            try {
+                if (FigurePointCheckPreProcessor.process(pointsForMultiAngleFigure)) {
+                    multiAngleFigures[i] = new MultiAngleFigure(countOfPoints, pointsForMultiAngleFigure);
+                    LOGGER.info(String.format("Figure object created with number of points = %d", countOfPoints));
+                }
+            } catch (FigurePointsException e) {
+                e.printStackTrace();
             }
         }
 
@@ -40,10 +45,14 @@ public class MultiAngleFactory {
     }
 
     private static void printInfoAboutFigure(MultiAngleFigure multiAngleFigure){
-        if (FigureExistencePostProcessor.process(multiAngleFigure)) {
-            LOGGER.info(multiAngleFigure);
-        } else {
-            LOGGER.error("Figure cannot exist");
+        try {
+            if (FigureExistencePostProcessor.process(multiAngleFigure)) {
+                LOGGER.info(multiAngleFigure);
+            } else {
+                LOGGER.error("Figure cannot exist");
+            }
+        } catch (FigureNotExistException e) {
+            e.printStackTrace();
         }
     }
 }

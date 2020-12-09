@@ -11,8 +11,4 @@ public class FigureNotExistException extends FigureException {
     public FigureNotExistException(String message) {
         super(message);
     }
-
-    public void logException(String message) {
-        LOGGER.error(message);
-    }
 }

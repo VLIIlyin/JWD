@@ -18,7 +18,7 @@ class MultiAngleFigure extends Figure {
     }
 
     public boolean isFigureCanExist() {
-        return !isPointsAreDifferent()
+        return isPointsAreDifferent()
                 && isSumOfSideCorrect();
     }
 

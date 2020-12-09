@@ -6,6 +6,15 @@ import com.epam.jwd.service.api.FigurePostProcessor;
 
 public class FigureExistencePostProcessor implements FigurePostProcessor {
 
+    @Override
+    public Figure postProcess(Figure figure) throws FigureNotExistException {
+        if(!isFigureExists(figure)){
+            throw new FigureNotExistException("Figure cannot be exist");
+        }
+
+        return figure;
+    }
+
     public static boolean process(Figure figure) throws FigureNotExistException {
         if (!isFigureExists(figure)){
             throw new FigureNotExistException("Figure cannot be exist");
