@@ -17,6 +17,10 @@ Added pre and post processor classes.
 PreProcessor works with points before creation of object and check if points are equals.
 PostProcessor works with figures. Return true if figure is valid.
 
+Updated implementation.
+Added new factory classes for figures with post/pre processors.
+Added new interface with can work with collection of figures (create, update, delete).
+
 Libraries used in this project:
 log4j-api-2.14.0.jar
 log4j-core-2.14.0.jar

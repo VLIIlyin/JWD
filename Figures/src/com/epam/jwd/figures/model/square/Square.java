@@ -7,7 +7,7 @@ import com.epam.jwd.figures.strategy.SquareStrategy;
 
 import java.util.Objects;
 
-class Square extends Figure {
+public class Square extends Figure {
 
     private static Square instance;
 

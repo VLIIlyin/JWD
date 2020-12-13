@@ -1,6 +1,5 @@
 package com.epam.jwd.figures.model.multiangle;
 
-import com.epam.jwd.exception.FigureException;
 import com.epam.jwd.figures.model.Figure;
 import com.epam.jwd.figures.model.point.Point;
 import com.epam.jwd.service.api.FigureFactory;

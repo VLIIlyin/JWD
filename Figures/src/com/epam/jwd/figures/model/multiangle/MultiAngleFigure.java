@@ -7,7 +7,7 @@ import com.epam.jwd.figures.service.PointService;
 import java.util.Arrays;
 import java.util.Objects;
 
-class MultiAngleFigure extends Figure {
+public class MultiAngleFigure extends Figure {
 
     private final int countOfPoints;
     private final Point[] points;

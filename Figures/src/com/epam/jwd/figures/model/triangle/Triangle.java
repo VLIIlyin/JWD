@@ -5,7 +5,7 @@ import com.epam.jwd.figures.model.point.Point;
 import com.epam.jwd.figures.service.PointService;
 import com.epam.jwd.figures.strategy.TriangleStrategy;
 
-class Triangle extends Figure {
+public class Triangle extends Figure {
 
     private final Point firstPoint;
     private final Point secondPoint;
