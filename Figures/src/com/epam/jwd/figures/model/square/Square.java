@@ -76,6 +76,14 @@ public class Square extends Figure {
                 && sides[0].equals(sides[3]);
     }
 
+    public double calculatePerimeter() {
+        return PointService.intervalBetweenPoints(firstPoint, secondPoint) * 4;
+    }
+
+    public double calculateArea() {
+        return Math.pow(PointService.intervalBetweenPoints(firstPoint, secondPoint), 2);
+    }
+
     public Point getFirstPoint() {
         return firstPoint;
     }

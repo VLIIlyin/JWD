@@ -110,4 +110,14 @@ public class MultiAngleFigure extends Figure {
                 ", points = " + Arrays.toString(points) +
                 '}';
     }
+
+    @Override
+    public double calculatePerimeter() {
+        return 0;
+    }
+
+    @Override
+    public double calculateArea() {
+        return 0;
+    }
 }

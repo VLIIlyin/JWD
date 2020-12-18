@@ -7,6 +7,7 @@ import com.epam.jwd.exception.FigureException;
 import com.epam.jwd.figures.model.Figure;
 import com.epam.jwd.figures.model.multiangle.MultiAngleFigure;
 import com.epam.jwd.figures.model.multiangle.MultiAngleFigureFactory;
+import com.epam.jwd.figures.model.point.Point;
 import com.epam.jwd.figures.model.point.PointFactory;
 import com.epam.jwd.figures.model.square.Square;
 import com.epam.jwd.figures.model.square.SquareFigureFactory;
@@ -15,10 +16,12 @@ import com.epam.jwd.figures.model.triangle.TriangleFigureFactory;
 import com.epam.jwd.service.api.AppContext;
 import com.epam.jwd.service.api.FigureFactory;
 import com.epam.jwd.service.api.FigureService;
+import com.epam.jwd.service.api.SearchCriteria;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UniversalFigureService<T extends Figure> implements FigureService<T> {
 
@@ -49,28 +52,37 @@ public class UniversalFigureService<T extends Figure> implements FigureService<T
         return countOfFigures;
     }
 
-    @Override
-    public T create() throws FigureException {
-        if (type == MultiAngleFigure.class) {
-            appContext = new MultiAngleAppContext();
-            figureFactory = appContext.createFigureFactory();
-            figure = (T) figureFactory.create(
-                    PointFactory.generateRandomArrayForFigure(MultiAngleFigureFactory.COUNT_OF_POINTS));
-        }
-        if (type == Triangle.class) {
-            appContext = new TriangleAppContext();
-            figureFactory = appContext.createFigureFactory();
-            figure = (T) figureFactory.create(
-                    PointFactory.generateRandomArrayForFigure(TriangleFigureFactory.COUNT_OF_POINTS));
-        }
-        if (type == Square.class) {
-            appContext = new SquareAppContext();
-            figureFactory = appContext.createFigureFactory();
-            figure = (T) figureFactory.create(
-                    PointFactory.generateRandomArrayForFigure(SquareFigureFactory.COUNT_OF_POINTS));
+    public T create() {
+        try {
+            if (type == MultiAngleFigure.class) {
+                appContext = new MultiAngleAppContext();
+                figureFactory = appContext.createFigureFactory();
+                figure = (T) figureFactory.create(
+                        PointFactory.generateRandomArrayForFigure(MultiAngleFigureFactory.COUNT_OF_POINTS));
+            }
+            if (type == Triangle.class) {
+                appContext = new TriangleAppContext();
+                figureFactory = appContext.createFigureFactory();
+                figure = (T) figureFactory.create(
+                        PointFactory.generateRandomArrayForFigure(TriangleFigureFactory.COUNT_OF_POINTS));
+            }
+            if (type == Square.class) {
+                appContext = new SquareAppContext();
+                figureFactory = appContext.createFigureFactory();
+                figure = (T) figureFactory.create(new Point[]{
+                                new Point(1, 1),
+                                new Point(1, 2),
+                                new Point(2, 2),
+                                new Point(2, 1),
+                        });
+                       // PointFactory.generateRandomArrayForFigure(SquareFigureFactory.COUNT_OF_POINTS));
+            }
+
+            LOGGER.info("Figure created");
+        } catch (FigureException e) {
+            LOGGER.error(e.getMessage());
         }
 
-        LOGGER.info("Figure created");
         return figure;
     }
 
@@ -83,30 +95,26 @@ public class UniversalFigureService<T extends Figure> implements FigureService<T
         LOGGER.info("Multi creation completed");
     }
 
-    @Override
     public void delete(int num) {
         try {
             figures.remove(num);
             LOGGER.info("Figure removed");
-        }catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             LOGGER.error(e.getMessage());
         }
     }
 
-    @Override
     public void deleteAll() {
         figures.clear();
         LOGGER.info("ALL figures removed");
     }
 
-    @Override
     public void update(int num) throws FigureException {
         figure = findById(num);
         if (figure != null) {
             figures.set(num, create());
             LOGGER.info("Figure updated");
-        }
-        else{
+        } else {
             LOGGER.error("Index wrong");
         }
     }
@@ -127,11 +135,50 @@ public class UniversalFigureService<T extends Figure> implements FigureService<T
 
     @Override
     public T findById(int num) {
-        try{
+        try {
             figure = figures.get(num);
-        }catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             LOGGER.error(e.getMessage());
         }
         return figure;
+    }
+
+    public List<T> getFigures() {
+        return figures;
+    }
+
+    public List<T> multiCriteriaSearch(SearchCriteria searchCriteria, List<T> filteredFigures) {
+
+        if (searchCriteria.getFigureList() != null) {
+            filteredFigures.addAll(searchCriteria.getFigureList());
+        }
+
+        if (searchCriteria.getArea() != 0) {
+            filteredFigures = figures.stream()
+                    .filter(f -> f.calculateArea() > searchCriteria.getArea())
+                    .collect(Collectors.toList());
+        }
+
+        if (searchCriteria.getPerimeter() != 0) {
+            filteredFigures = figures.stream()
+                    .filter(f -> f.calculatePerimeter() < searchCriteria.getPerimeter())
+                    .collect(Collectors.toList());
+        }
+
+        if (searchCriteria.getPerimeterPlusArea() != 0) {
+            filteredFigures = figures.stream()
+                    .filter(f -> f.calculatePerimeter() + f.calculateArea()
+                            > searchCriteria.getPerimeterPlusArea())
+                    .collect(Collectors.toList());
+        }
+
+        if (searchCriteria.getPerimeterMultiplyArea() != 0) {
+            filteredFigures = figures.stream()
+                    .filter(f -> f.calculatePerimeter() * f.calculateArea()
+                            < searchCriteria.getPerimeterMultiplyArea())
+                    .collect(Collectors.toList());
+        }
+
+        return filteredFigures;
     }
 }

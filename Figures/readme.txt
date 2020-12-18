@@ -21,6 +21,8 @@ Updated implementation.
 Added new factory classes for figures with post/pre processors.
 Added new interface with can work with collection of figures (create, update, delete).
 
+Updated implementation. Added functionality of multi criteria search using Builder pattern.
+
 Libraries used in this project:
 log4j-api-2.14.0.jar
 log4j-core-2.14.0.jar

@@ -1,6 +1,5 @@
 package com.epam.jwd.service.impl;
 
-import com.epam.jwd.exception.FigureException;
 import com.epam.jwd.exception.FigurePointsException;
 import com.epam.jwd.figures.model.point.Point;
 import com.epam.jwd.figures.service.PointService;

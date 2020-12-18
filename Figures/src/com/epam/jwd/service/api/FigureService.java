@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface FigureService<T extends Figure> {
 
-    T create() throws FigureException;
+    T create();
     void multiCreate(int NumberOfFigures) throws FigureException;
     void delete(int num);
     void deleteAll();
@@ -15,4 +15,5 @@ public interface FigureService<T extends Figure> {
     void save(T figure);
     List<T> findAll();
     T findById(int num);
+    List<T> multiCriteriaSearch(SearchCriteria searchCriteria, List<T> ff);
 }

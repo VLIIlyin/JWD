@@ -15,4 +15,6 @@ public abstract class Figure implements FigureInterface{
     }
 
     public abstract String toString();
+    public abstract double calculatePerimeter();
+    public abstract double calculateArea();
 }

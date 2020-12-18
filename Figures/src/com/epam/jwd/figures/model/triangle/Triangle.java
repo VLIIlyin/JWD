@@ -55,6 +55,30 @@ public class Triangle extends Figure {
                 && sidesSum[2] > intervals[0];
     }
 
+    private double calculateCompositionOfHalfPerimeterWithSides() {
+        return calculateHalfPerimeter()
+                * calculateHalfPerimeter() - PointService.intervalBetweenPoints(firstPoint, secondPoint)
+                * calculateHalfPerimeter() - PointService.intervalBetweenPoints(secondPoint, thirdPoint)
+                * calculateHalfPerimeter() - PointService.intervalBetweenPoints(thirdPoint, firstPoint);
+    }
+
+    public double calculatePerimeter() {
+        return PointService.intervalBetweenPoints(firstPoint, secondPoint)
+                + PointService.intervalBetweenPoints(secondPoint, thirdPoint)
+                + PointService.intervalBetweenPoints(thirdPoint, firstPoint);
+    }
+
+    private double calculateHalfPerimeter() {
+        return calculatePerimeter() / 2;
+    }
+
+    public double calculateArea() {
+        double compositionOfHalfPerimeterWithSides = calculateCompositionOfHalfPerimeterWithSides();
+        return Math.sqrt(compositionOfHalfPerimeterWithSides < 0
+                ? compositionOfHalfPerimeterWithSides * -1
+                : compositionOfHalfPerimeterWithSides);
+    }
+
     public Point getFirstPoint() {
         return firstPoint;
     }
